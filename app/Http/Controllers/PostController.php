@@ -39,12 +39,14 @@ class PostController extends Controller
     {
       $this->validate($request, [
         'title'         => 'required|min:3|max:255',
+        'slug'          => 'required|min:3|max:255|unique:posts',
         'description'   => 'required|min:3'
       ]);
 
       $post = new Post;
 
       $post->title = $request->title;
+      $post->slug = str_slug($request->slug);
       $post->description = $request->description;
 
       $post->save();
@@ -58,9 +60,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-      $post = Post::find($id);
+      $post = Post::where('slug', $slug)->first();
 
       return view('post.show')->withPost($post);
     }
@@ -71,9 +73,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-      $post = Post::find($id);
+      $post = Post::where('slug', $slug)->first();
 
       return view('post.edit')->withPost($post);
     }
@@ -85,21 +87,23 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
       $this->validate($request, [
         'title'         => 'required|min:3|max:255',
+        'slug'          => 'required|min:3|max:255|unique:posts,id,' . $slug,
         'description'   => 'required|min:3'
       ]);
 
-      $post = Post::find($id);
+      $post = Post::where('slug', $slug)->first();
 
       $post->title = $request->title;
+      $post->slug = str_slug($request->slug);
       $post->description = $request->description;
 
       $post->save();
 
-      return redirect()->route('post.show', $post->id);
+      return redirect()->route('post.show', $post->slug);
     }
 
     /**

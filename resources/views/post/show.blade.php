@@ -45,7 +45,7 @@
                 <div class="card-body">
                   <p>{{ $post->description }}</p>
 
-                  <a href="{{ route('post.edit', $post->id) }}" class="btn btn-primary">Edit Post</a>
+                  <a href="{{ route('post.edit', $post->slug) }}" class="btn btn-primary">Edit Post</a>
                 </div>
               </div>
             </div>

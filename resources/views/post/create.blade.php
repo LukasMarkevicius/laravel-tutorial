@@ -42,8 +42,14 @@
 
                 <div class="form-group">
                   <label for="title">Title</label>
-                  <input type="text" name="title" class="form-control" value="{{ old('title') }}">
+                  <input type="text" name="title" class="form-control" value="{{ old('title') }}" placeholder="Post title">
                 </div>
+
+                <div class="form-group">
+                  <label for="slug">Slug</label>
+                  <input type="text" name="slug" class="form-control" value="{{ old('slug') }}" placeholder="post-slug">
+                </div>
+
                 <div class="form-group">
                   <label for="description">Description</label>
                   <textarea name="description" rows="8" cols="80" class="form-control">{{ old('description') }}</textarea>

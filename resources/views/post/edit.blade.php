@@ -43,13 +43,19 @@
                 </div>
 
                 <div class="card-body">
-                  <form method="POST" action="{{ route('post.update', $post->id) }}">
+                  <form method="POST" action="{{ route('post.update', $post->slug) }}">
                     @csrf
 
                     <div class="form-group">
                       <label for="title">Title</label>
                       <input type="text" name="title" class="form-control" value="{{ $post->title }}">
                     </div>
+
+                    <div class="form-group">
+                      <label for="slug">Slug</label>
+                      <input type="text" name="slug" class="form-control" value="{{ $post->slug }}">
+                    </div>
+
                     <div class="form-group">
                       <label for="description">Description</label>
                       <textarea name="description" rows="8" cols="80" class="form-control">{{ $post->description }}</textarea>
