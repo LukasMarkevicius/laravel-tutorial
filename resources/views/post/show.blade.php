@@ -36,19 +36,19 @@
           </nav>
           <div class="container py-3">
           <div class="row">
-            @foreach($posts as $post)
-              <div class="col-md-4">
-                <div class="card">
-                  <div class="card-header">
-                    <h3>{{ $post->title }}</h3>
-                  </div>
-                  <div class="card-body">
-                    <p>{{ substr($post->description, 0, 100) }}</p>
-                    <a href="{{ route('post.show', $post->id) }}" class="btn btn-primary btn-block">Read More</a>
-                  </div>
+            <div class="col-md-8 offset-md-2">
+              <div class="card">
+                <div class="card-header">
+                  <h1>{{ $post->title }}</h1>
+                </div>
+
+                <div class="card-body">
+                  <p>{{ $post->description }}</p>
+
+                  <a href="{{ route('post.edit', $post->id) }}" class="btn btn-primary">Edit Post</a>
                 </div>
               </div>
-            @endforeach
+            </div>
           </div>
         </div>
     </body>

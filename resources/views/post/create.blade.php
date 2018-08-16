@@ -36,19 +36,22 @@
           </nav>
           <div class="container py-3">
           <div class="row">
-            @foreach($posts as $post)
-              <div class="col-md-4">
-                <div class="card">
-                  <div class="card-header">
-                    <h3>{{ $post->title }}</h3>
-                  </div>
-                  <div class="card-body">
-                    <p>{{ substr($post->description, 0, 100) }}</p>
-                    <a href="{{ route('post.show', $post->id) }}" class="btn btn-primary btn-block">Read More</a>
-                  </div>
+            <div class="col-md-8 offset-md-2">
+              <form method="POST" action="{{ route('post.store') }}">
+                @csrf
+
+                <div class="form-group">
+                  <label for="title">Title</label>
+                  <input type="text" name="title" class="form-control" value="{{ old('title') }}">
                 </div>
-              </div>
-            @endforeach
+                <div class="form-group">
+                  <label for="description">Description</label>
+                  <textarea name="description" rows="8" cols="80" class="form-control">{{ old('description') }}</textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Create Post</button>
+              </form>
+            </div>
           </div>
         </div>
     </body>
