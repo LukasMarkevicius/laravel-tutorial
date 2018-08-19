@@ -46,6 +46,10 @@
                   <p>{{ $post->description }}</p>
 
                   <a href="{{ route('post.edit', $post->slug) }}" class="btn btn-primary">Edit Post</a>
+                  <form action="{{ route('post.destroy', $post->slug) }}" method="post">
+                    @csrf
+                    <button type="submit" class="btn btn-danger mt-3">Delete</button>
+                  </form>
                 </div>
               </div>
             </div>
