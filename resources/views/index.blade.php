@@ -30,6 +30,16 @@
               </ul>
               {{-- <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> --}}
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a href="{{ route('login') }}" class="nav-link">Login</a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a href="{{ route('register') }}" class="nav-link">Register</a>
+                  </li>
+                </ul>
+                
                 <a href="{{ route('post.create') }}" class="btn btn-success my-2 my-sm-0">Create Post</a>
               {{-- </form> --}}
             </div>
