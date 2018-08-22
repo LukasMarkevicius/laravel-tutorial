@@ -19,3 +19,7 @@ Route::get('/post/{slug}', 'PostController@show')->name('post.show');
 Route::get('/post/{slug}/edit', 'PostController@edit')->name('post.edit');
 Route::post('/post/{slug}/edit', 'PostController@update')->name('post.update');
 Route::post('/post/{slug}/destroy', 'PostController@destroy')->name('post.destroy');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
