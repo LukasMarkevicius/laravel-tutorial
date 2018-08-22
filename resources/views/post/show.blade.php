@@ -28,10 +28,19 @@
                   <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                 </li>
               </ul>
-              {{-- <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> --}}
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a href="{{ route('login') }}" class="nav-link">Login</a>
+                </li>
+
+                <li class="nav-item">
+                  <a href="{{ route('register') }}" class="nav-link">Register</a>
+                </li>
+              </ul>
+
+              @auth
                 <a href="{{ route('post.create') }}" class="btn btn-success my-2 my-sm-0">Create Post</a>
-              {{-- </form> --}}
+              @endauth
             </div>
           </nav>
           <div class="container py-3">
@@ -45,11 +54,13 @@
                 <div class="card-body">
                   <p>{{ $post->description }}</p>
 
-                  <a href="{{ route('post.edit', $post->slug) }}" class="btn btn-primary">Edit Post</a>
-                  <form action="{{ route('post.destroy', $post->slug) }}" method="post">
-                    @csrf
-                    <button type="submit" class="btn btn-danger mt-3">Delete</button>
-                  </form>
+                  @auth
+                    <a href="{{ route('post.edit', $post->slug) }}" class="btn btn-primary">Edit Post</a>
+                    <form action="{{ route('post.destroy', $post->slug) }}" method="post">
+                      @csrf
+                      <button type="submit" class="btn btn-danger mt-3">Delete</button>
+                    </form>
+                  @endauth
                 </div>
               </div>
             </div>
