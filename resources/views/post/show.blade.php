@@ -13,7 +13,7 @@
 
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <script src="{{ asset('js/app.js') }}" defer></script>
-        
+
 
     </head>
     <body>
@@ -74,13 +74,13 @@
                 <div class="card-body">
                   <p>{{ $post->description }}</p>
 
-                  @auth
+                  @if (Auth::id() == $post->user_id)
                     <a href="{{ route('post.edit', $post->slug) }}" class="btn btn-primary">Edit Post</a>
                     <form action="{{ route('post.destroy', $post->slug) }}" method="post">
                       @csrf
                       <button type="submit" class="btn btn-danger mt-3">Delete</button>
                     </form>
-                  @endauth
+                  @endif
                 </div>
               </div>
             </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use Auth;
 
 class PostController extends Controller
 {
@@ -51,6 +52,7 @@ class PostController extends Controller
 
       $post = new Post;
 
+      $post->user_id = Auth::id();
       $post->title = $request->title;
       $post->slug = str_slug($request->slug);
       $post->description = $request->description;
@@ -82,6 +84,10 @@ class PostController extends Controller
     public function edit($slug)
     {
       $post = Post::where('slug', $slug)->first();
+
+      if ($post->user_id != Auth::id()) {
+        return redirect()->route('index');
+      }
 
       return view('post.edit')->withPost($post);
     }
