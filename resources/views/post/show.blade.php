@@ -71,6 +71,8 @@
                   <h1>{{ $post->title }}</h1>
                 </div>
 
+                <img src="{{ asset('images/' . $post->image) }}" alt="{{ $post->title }} photo" class="img-fluid">
+
                 <div class="card-body">
                   <p>{{ $post->description }}</p>
 
