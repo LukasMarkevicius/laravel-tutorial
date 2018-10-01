@@ -13,7 +13,7 @@
 
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <script src="{{ asset('js/app.js') }}" defer></script>
-        
+
 
     </head>
     <body>
@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="card-body">
-                  <form method="POST" action="{{ route('post.update', $post->slug) }}">
+                  <form method="POST" action="{{ route('post.update', $post->slug) }}" enctype="multipart/form-data">
                     @csrf
 
                     <div class="form-group">
@@ -56,6 +56,14 @@
                     <div class="form-group">
                       <label for="slug">Slug</label>
                       <input type="text" name="slug" class="form-control" value="{{ $post->slug }}">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="image">Post Image</label>
+                      <ul>
+                        <li>{{ $post->image }}</li>
+                      </ul>
+                      <input type="file" class="form-control-file" name="image">
                     </div>
 
                     <div class="form-group">
