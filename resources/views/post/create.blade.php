@@ -13,7 +13,7 @@
 
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <script src="{{ asset('js/app.js') }}" defer></script>
-        
+
 
     </head>
     <body>
@@ -39,7 +39,7 @@
           <div class="container py-3">
           <div class="row">
             <div class="col-md-8 offset-md-2">
-              <form method="POST" action="{{ route('post.store') }}">
+              <form method="POST" action="{{ route('post.store') }}" enctype="multipart/form-data">
                 @csrf
 
                 <div class="form-group">
@@ -50,6 +50,11 @@
                 <div class="form-group">
                   <label for="slug">Slug</label>
                   <input type="text" name="slug" class="form-control" value="{{ old('slug') }}" placeholder="post-slug">
+                </div>
+
+                <div class="form-group">
+                  <label for="image">Post Image</label>
+                  <input type="file" class="form-control-file" name="image">
                 </div>
 
                 <div class="form-group">
