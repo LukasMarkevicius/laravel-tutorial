@@ -7,6 +7,7 @@ use App\Post;
 use Auth;
 use Image;
 use Storage;
+use Session;
 
 class PostController extends Controller
 {
@@ -71,6 +72,8 @@ class PostController extends Controller
       }
 
       $post->save();
+
+      Session::flash('success', 'You have successfully created a post!');
 
       return redirect()->route('index');
     }
@@ -141,6 +144,8 @@ class PostController extends Controller
 
       $post->save();
 
+      Session::flash('success', 'You have successfully updated a post!');
+
       return redirect()->route('post.show', $post->slug);
     }
 
@@ -156,6 +161,8 @@ class PostController extends Controller
 
       Storage::delete($post->image);
       $post->delete();
+
+      Session::flash('success', 'You have successfully deleted a post!');
 
       return redirect()->route('index');
     }

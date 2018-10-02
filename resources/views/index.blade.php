@@ -13,13 +13,13 @@
 
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <script src="{{ asset('js/app.js') }}" defer></script>
-        
+
 
     </head>
     <body>
 
           <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">Laravel Authentication Tutorial</a>
+            <a class="navbar-brand" href="{{ route('index') }}">Laravel Authentication Tutorial</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -27,7 +27,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                  <a class="nav-link" href="{{ route('index') }}">Home <span class="sr-only">(current)</span></a>
                 </li>
               </ul>
 
@@ -66,10 +66,41 @@
 
             </div>
           </nav>
+
+          @if (Session::has('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <h4 class="alert-heading">Success!</h4>
+              <p>{{ Session::get('success') }}</p>
+
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          @endif
+
+          @if (Session::has('errors'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <h4 class="alert-heading">Error!</h4>
+
+              <p>
+                <ul>
+                  @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                  @endforeach
+                </ul>
+              </p>
+
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          @endif
+
+
           <div class="container py-3">
           <div class="row">
             @foreach($posts as $post)
-              <div class="col-md-4">
+              <div class="col-md-4 mt-4">
                 <div class="card">
                   <div class="card-header">
                     <h3>{{ $post->title }}</h3>
