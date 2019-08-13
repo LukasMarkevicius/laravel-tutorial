@@ -89,6 +89,23 @@
                     </div>
 
                     <div class="form-group">
+                      <label for="category_id">Category</label>
+                      <select class="form-control" name="category_id" required>
+                        <option value="">Select a Category</option>
+
+                        @foreach ($categories as $category)
+                          <option value="{{ $category->id }}" {{ $category->id == $post->category_id ? 'selected' : '' }}>{{ $category->name }}</option>
+
+                          @if ($category->children)
+                            @foreach ($category->children as $child)
+                              <option value="{{ $child->id }}" {{ $child->id == $post->category_id ? 'selected' : '' }}>&nbsp;&nbsp;{{ $child->name }}</option>
+                            @endforeach
+                          @endif
+                        @endforeach
+                      </select>
+                    </div>
+
+                    <div class="form-group">
                       <label for="image">Post Image</label>
                       <ul>
                         <li>{{ $post->image }}</li>

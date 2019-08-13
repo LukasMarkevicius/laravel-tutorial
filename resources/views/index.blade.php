@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel Authentication Tutorial</title>
+        <title>Laravel Tutorial</title>
 
 
         <!-- Fonts -->
@@ -19,7 +19,7 @@
     <body>
 
           <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="{{ route('index') }}">Laravel Authentication Tutorial</a>
+            <a class="navbar-brand" href="{{ route('index') }}">Laravel Tutorial</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -29,6 +29,12 @@
                 <li class="nav-item active">
                   <a class="nav-link" href="{{ route('index') }}">Home <span class="sr-only">(current)</span></a>
                 </li>
+
+                @auth
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ route('category.index') }}">Categories</a>
+                  </li>
+                @endauth
               </ul>
 
               <ul class="navbar-nav ml-auto">
@@ -104,6 +110,7 @@
                 <div class="card">
                   <div class="card-header">
                     <h3>{{ $post->title }}</h3>
+                    <p class="text-muted">{{ $post->category ? $post->category->name : 'Uncategorized' }}</p>
                   </div>
                   <div class="card-body">
                     <p>{{ substr($post->description, 0, 100) }}</p>

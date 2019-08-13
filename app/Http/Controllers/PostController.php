@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\Category;
 use Auth;
 use Image;
 use Storage;
@@ -36,7 +37,9 @@ class PostController extends Controller
      */
     public function create()
     {
-      return view('post.create');
+      $categories = Category::with('children')->whereNull('parent_id')->get();
+
+      return view('post.create')->withCategories($categories);
     }
 
     /**
@@ -48,6 +51,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
       $this->validate($request, [
+        'category_id'   => 'required|numeric',
         'title'         => 'required|min:3|max:255',
         'slug'          => 'required|min:3|max:255|unique:posts',
         'image'         => 'required|image',
@@ -57,6 +61,7 @@ class PostController extends Controller
       $post = new Post;
 
       $post->user_id = Auth::id();
+      $post->category_id = $request->category_id;
       $post->title = $request->title;
       $post->slug = str_slug($request->slug);
       $post->description = $request->description;
@@ -100,12 +105,13 @@ class PostController extends Controller
     public function edit($slug)
     {
       $post = Post::where('slug', $slug)->first();
+      $categories = Category::with('children')->whereNull('parent_id')->get();
 
       if ($post->user_id != Auth::id()) {
         return redirect()->route('index');
       }
 
-      return view('post.edit')->withPost($post);
+      return view('post.edit')->withPost($post)->withCategories($categories);
     }
 
     /**
@@ -118,6 +124,7 @@ class PostController extends Controller
     public function update(Request $request, $slug)
     {
       $this->validate($request, [
+        'category_id'   => 'required|numeric',
         'title'         => 'required|min:3|max:255',
         'slug'          => 'required|min:3|max:255|unique:posts,id,' . $slug,
         'image'         => 'sometimes|image',
@@ -126,6 +133,7 @@ class PostController extends Controller
 
       $post = Post::where('slug', $slug)->first();
 
+      $post->category_id = $request->category_id;
       $post->title = $request->title;
       $post->slug = str_slug($request->slug);
       $post->description = $request->description;

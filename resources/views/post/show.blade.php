@@ -99,6 +99,9 @@
               <div class="card">
                 <div class="card-header">
                   <h1>{{ $post->title }}</h1>
+                  <p class="text-muted">
+                    {{ $post->category ? $post->category->name : 'Uncategorized' }}
+                  </p>
                 </div>
 
                 <img src="{{ asset('images/' . $post->image) }}" alt="{{ $post->title }} photo" class="img-fluid">
