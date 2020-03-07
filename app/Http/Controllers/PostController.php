@@ -16,7 +16,7 @@ class PostController extends Controller
     {
       $posts = Post::all();
 
-      return view('welcome')->withPosts($posts);
+      return view('post.index')->withPosts($posts);
     }
 
     /**
@@ -37,21 +37,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-      $this->validate($request, [
+      $validatedData = $this->validate($request, [
         'title'         => 'required|min:3|max:255',
-        'slug'          => 'required|min:3|max:255|unique:posts',
         'description'   => 'required|min:3'
       ]);
 
-      $post = new Post;
+      Post::create($validatedData);
 
-      $post->title = $request->title;
-      $post->slug = str_slug($request->slug);
-      $post->description = $request->description;
-
-      $post->save();
-
-      return redirect()->route('index');
+      return redirect()->route('post.index');
     }
 
     /**
@@ -60,10 +53,8 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show(Post $post)
     {
-      $post = Post::where('slug', $slug)->first();
-
       return view('post.show')->withPost($post);
     }
 
@@ -73,10 +64,8 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($slug)
+    public function edit(Post $post)
     {
-      $post = Post::where('slug', $slug)->first();
-
       return view('post.edit')->withPost($post);
     }
 
@@ -87,23 +76,16 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $slug)
+    public function update(Request $request, Post $post)
     {
-      $this->validate($request, [
+      $validatedData = $this->validate($request, [
         'title'         => 'required|min:3|max:255',
-        'slug'          => 'required|min:3|max:255|unique:posts,id,' . $slug,
         'description'   => 'required|min:3'
       ]);
 
-      $post = Post::where('slug', $slug)->first();
+      $post->update($validatedData);
 
-      $post->title = $request->title;
-      $post->slug = str_slug($request->slug);
-      $post->description = $request->description;
-
-      $post->save();
-
-      return redirect()->route('post.show', $post->slug);
+      return redirect()->route('post.show', $post);
     }
 
     /**
@@ -112,8 +94,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+      $post->delete();
+
+      return redirect()->route('post.index');
     }
 }
