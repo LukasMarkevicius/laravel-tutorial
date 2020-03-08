@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="card-body">
-                            <form method="POST" action="{{ route('post.update', $post->slug) }}">
+                            <form method="POST" action="{{ route('post.update', $post->slug) }}" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
 
@@ -53,6 +53,16 @@
                                     <label for="slug">Slug</label>
                                     <input type="text" name="slug" class="form-control" value="{{ $post->slug }}"
                                         placeholder="post-slug">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="image">Post Image</label>
+                                    @if ($post->image)
+                                        <ul>
+                                            <li>{{ $post->image }}</li>
+                                        </ul>
+                                    @endif
+                                    <input type="file" class="form-control-file" name="image">
                                 </div>
 
                                 <div class="form-group">

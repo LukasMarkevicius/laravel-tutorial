@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Post;
+use Image;
+use Storage;
 
 class PostController extends Controller
 {
@@ -41,13 +43,25 @@ class PostController extends Controller
       $validatedData = $this->validate($request, [
         'title'         => 'required|min:3|max:255',
         'slug'          => 'required|min:3|max:255|unique:posts',
+        'image'         => 'sometimes|image',
         'description'   => 'required|min:3'
       ]);
 
       $validatedData['slug'] = Str::slug($validatedData['slug'], '-');
 
-      Post::create($validatedData);
+      $post = Post::create($validatedData);
 
+      if ($request->hasfile('image')) {
+        $image = $request->file('image');
+        $filename = time() . '.' . $image->getClientOriginalExtension();
+        $location = storage_path('app/public/images/') . $filename;
+
+        Image::make($image)->save($location);
+
+        $post->image = $filename;
+        $post->save();
+      }
+      
       return redirect()->route('post.index');
     }
 
@@ -85,12 +99,26 @@ class PostController extends Controller
       $validatedData = $this->validate($request, [
         'title'         => 'required|min:3|max:255',
         'slug'          => 'required|min:3|max:255|unique:posts,id,' . $post->slug,
+        'image'         => 'sometimes|image',
         'description'   => 'required|min:3'
       ]);
 
       $validatedData['slug'] = Str::slug($validatedData['slug'], '-');
 
       $post->update($validatedData);
+
+      if ($request->hasfile('image')) {
+        Storage::disk('public')->delete("images/$post->image");
+
+        $image = $request->file('image');
+        $filename = time() . '.' . $image->getClientOriginalExtension();
+        $location = storage_path('app/public/images/') . $filename;
+
+        Image::make($image)->save($location);
+
+        $post->image = $filename;
+        $post->save();
+      }
 
       return redirect()->route('post.show', $post);
     }
@@ -103,6 +131,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+      Storage::disk('public')->delete("images/$post->image");
       $post->delete();
 
       return redirect()->route('post.index');

@@ -40,6 +40,10 @@
                         </div>
 
                         <div class="card-body">
+                            @if ($post->image)
+                                <img src="{{ asset('storage/images/' . $post->image) }}" alt="{{ $post->title }} photo" class="img-fluid">
+                            @endif
+
                             <p>{{ $post->description }}</p>
 
                             <a href="{{ route('post.edit', $post->slug) }}" class="btn btn-primary">Edit Post</a>
