@@ -5,6 +5,7 @@ This is a repository for a Laravel series in which you can learn the basics of L
 * How to create slugs
 * How to upload images
 * How to add session flash messages
+* Added user authentication & relationship between users and posts
 
 ## Requirements
 Make sure your system meets the requirements and has necessary extensions. You can look up official [Laravel Requirements](https://laravel.com/docs/master/installation#server-requirements)

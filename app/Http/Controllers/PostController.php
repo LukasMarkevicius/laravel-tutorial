@@ -8,9 +8,14 @@ use App\Post;
 use Image;
 use Storage;
 use Session;
+use Auth;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'show']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -48,6 +53,7 @@ class PostController extends Controller
         'description'   => 'required|min:3'
       ]);
 
+      $validatedData['user_id'] = Auth::id();
       $validatedData['slug'] = Str::slug($validatedData['slug'], '-');
 
       $post = Post::create($validatedData);
@@ -87,6 +93,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+      if ($post->user_id != Auth::id()) {
+        return redirect()->back();
+      }
       return view('post.edit')->withPost($post);
     }
 
