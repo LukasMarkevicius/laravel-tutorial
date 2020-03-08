@@ -42,8 +42,8 @@
                         <div class="card-body">
                             <p>{{ $post->description }}</p>
 
-                            <a href="{{ route('post.edit', $post->id) }}" class="btn btn-primary">Edit Post</a>
-                            <form action="{{ route('post.destroy', $post->id) }}" method="post">
+                            <a href="{{ route('post.edit', $post->slug) }}" class="btn btn-primary">Edit Post</a>
+                            <form action="{{ route('post.destroy', $post->slug) }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger mt-3">Delete</button>

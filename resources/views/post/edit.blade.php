@@ -40,13 +40,19 @@
                         </div>
 
                         <div class="card-body">
-                            <form method="POST" action="{{ route('post.update', $post->id) }}">
+                            <form method="POST" action="{{ route('post.update', $post->slug) }}">
                                 @csrf
                                 @method('PUT')
 
                                 <div class="form-group">
                                     <label for="title">Title</label>
                                     <input type="text" name="title" class="form-control" value="{{ $post->title }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="slug">Slug</label>
+                                    <input type="text" name="slug" class="form-control" value="{{ $post->slug }}"
+                                        placeholder="post-slug">
                                 </div>
 
                                 <div class="form-group">

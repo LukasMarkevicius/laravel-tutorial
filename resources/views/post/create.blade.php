@@ -44,6 +44,12 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="slug">Slug</label>
+                            <input type="text" name="slug" class="form-control" value="{{ old('slug') }}"
+                                placeholder="post-slug">
+                        </div>
+
+                        <div class="form-group">
                             <label for="description">Description</label>
                             <textarea name="description" rows="8" cols="80"
                                 class="form-control">{{ old('description') }}</textarea>

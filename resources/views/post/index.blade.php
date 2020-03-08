@@ -41,7 +41,7 @@
                       </div>
                       <div class="card-body">
                           <p>{{ substr($post->description, 0, 100) }}</p>
-                          <a href="{{ route('post.show', $post->id) }}" class="btn btn-primary btn-block">Read More</a>
+                          <a href="{{ route('post.show', $post->slug) }}" class="btn btn-primary btn-block">Read More</a>
                       </div>
                   </div>
               </div>

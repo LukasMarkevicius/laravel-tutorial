@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Post;
 
 class PostController extends Controller
@@ -39,8 +40,11 @@ class PostController extends Controller
     {
       $validatedData = $this->validate($request, [
         'title'         => 'required|min:3|max:255',
+        'slug'          => 'required|min:3|max:255|unique:posts',
         'description'   => 'required|min:3'
       ]);
+
+      $validatedData['slug'] = Str::slug($validatedData['slug'], '-');
 
       Post::create($validatedData);
 
@@ -80,8 +84,11 @@ class PostController extends Controller
     {
       $validatedData = $this->validate($request, [
         'title'         => 'required|min:3|max:255',
+        'slug'          => 'required|min:3|max:255|unique:posts,id,' . $post->slug,
         'description'   => 'required|min:3'
       ]);
+
+      $validatedData['slug'] = Str::slug($validatedData['slug'], '-');
 
       $post->update($validatedData);
 
