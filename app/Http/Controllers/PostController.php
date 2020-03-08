@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use App\Post;
 use Image;
 use Storage;
+use Session;
 
 class PostController extends Controller
 {
@@ -61,6 +62,8 @@ class PostController extends Controller
         $post->image = $filename;
         $post->save();
       }
+
+      Session::flash('success', 'You have successfully created a post!');
       
       return redirect()->route('post.index');
     }
@@ -120,6 +123,8 @@ class PostController extends Controller
         $post->save();
       }
 
+      Session::flash('success', 'You have successfully updated a post!');
+
       return redirect()->route('post.show', $post);
     }
 
@@ -133,6 +138,8 @@ class PostController extends Controller
     {
       Storage::disk('public')->delete("images/$post->image");
       $post->delete();
+
+      Session::flash('success', 'You have successfully deleted a post!');
 
       return redirect()->route('post.index');
     }
