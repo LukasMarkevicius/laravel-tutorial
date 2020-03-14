@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Post;
+use App\Category;
 use Image;
 use Storage;
 use Session;
@@ -23,7 +24,7 @@ class PostController extends Controller
      */
     public function index()
     {
-      $posts = Post::all();
+      $posts = Post::with('category')->get();
 
       return view('post.index')->withPosts($posts);
     }
@@ -35,7 +36,9 @@ class PostController extends Controller
      */
     public function create()
     {
-      return view('post.create');
+      $categories = Category::with('children')->whereNull('parent_id')->get();
+
+      return view('post.create')->withCategories($categories);
     }
 
     /**
@@ -50,6 +53,7 @@ class PostController extends Controller
         'title'         => 'required|min:3|max:255',
         'slug'          => 'required|min:3|max:255|unique:posts',
         'image'         => 'sometimes|image',
+        'category_id'   => 'required|numeric',
         'description'   => 'required|min:3'
       ]);
 
@@ -96,7 +100,10 @@ class PostController extends Controller
       if ($post->user_id != Auth::id()) {
         return redirect()->back();
       }
-      return view('post.edit')->withPost($post);
+
+      $categories = Category::with('children')->whereNull('parent_id')->get();
+
+      return view('post.edit')->withPost($post)->withCategories($categories);
     }
 
     /**
@@ -112,6 +119,7 @@ class PostController extends Controller
         'title'         => 'required|min:3|max:255',
         'slug'          => 'required|min:3|max:255|unique:posts,id,' . $post->slug,
         'image'         => 'sometimes|image',
+        'category_id'   => 'required|numeric',
         'description'   => 'required|min:3'
       ]);
 

@@ -26,6 +26,10 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                     </li>
+
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{ route('category.index') }}">Categories</a>
+                  </li>
                 </ul>
 
                 <a href="{{ route('post.create') }}" class="btn btn-success my-2 my-sm-0">Create Post</a>
@@ -81,6 +85,22 @@
                         <div class="form-group">
                             <label for="image">Post Image</label>
                             <input type="file" class="form-control-file" name="image">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category_id">Category</label>
+                            <select class="form-control" name="category_id" required>
+                                <option value="">Select a Category</option>
+
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}" {{ $category->id === old('category_id') ? 'selected' : '' }}>{{ $category->name }}</option>
+                                    @if ($category->children)
+                                        @foreach ($category->children as $child)
+                                            <option value="{{ $child->id }}" {{ $child->id === old('category_id') ? 'selected' : '' }}>&nbsp;&nbsp;{{ $child->name }}</option>
+                                        @endforeach
+                                    @endif
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="form-group">

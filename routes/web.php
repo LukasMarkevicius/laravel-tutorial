@@ -12,6 +12,7 @@
 */
 
 Route::resource('post', 'PostController');
+Route::resource('category', 'CategoryController');
 
 Auth::routes();
 

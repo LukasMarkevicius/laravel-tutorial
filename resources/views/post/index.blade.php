@@ -28,6 +28,10 @@
                   <li class="nav-item active">
                       <a class="nav-link" href="{{ route('post.index') }}">Home <span class="sr-only">(current)</span></a>
                   </li>
+
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{ route('category.index') }}">Categories</a>
+                  </li>
               </ul>
 
               <ul class="navbar-nav ml-auto">
@@ -100,6 +104,7 @@
                   <div class="card">
                       <div class="card-header">
                           <h3>{{ $post->title }}</h3>
+                          <p class="text-muted">{{ $post->category ? $post->category->name : 'Uncategorized' }}</p>
                       </div>
                       <div class="card-body">
                           <p>{{ substr($post->description, 0, 100) }}</p>
