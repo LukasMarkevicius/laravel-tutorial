@@ -7,6 +7,7 @@ This is a repository for a Laravel series in which you can learn the basics of L
 * How to add session flash messages
 * Added user authentication & relationship between users and posts
 * Added categories and subcategories
+* Made a better views layout structure
 
 ## Requirements
 Make sure your system meets the requirements and has necessary extensions. You can look up official [Laravel Requirements](https://laravel.com/docs/master/installation#server-requirements)
